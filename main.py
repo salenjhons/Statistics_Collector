@@ -114,7 +114,7 @@ def get_tasks_field(ses, url):
     ws, wb, path = config_excel_file(start_date, end_date)
 
     response = ses.get(
-        url + f'task?CreatedMoreThan={start_date}&CreatedLessThan={end_date}&pagesize=100&ServiceIds='
+        url + f'task?CreatedMoreThan={start_date}&CreatedLessThan={end_date}&pagesize=200&ServiceIds='
         + filtered_services_list,
         auth=HTTPBasicAuth(cred, cred))
     paginator = json.loads(response.content).get('Paginator')
@@ -123,11 +123,11 @@ def get_tasks_field(ses, url):
     for page_number in range(1, paginator['PageCount'] + 1):
         response = ses.get(url +
                            f'task?CreatedMoreThan={start_date}&CreatedLessThan={end_date}'
-                           f'&page={page_number}&pagesize=100&ServiceIds=' + filtered_services_list)
+                           f'&page={page_number}&pagesize=200&ServiceIds=' + filtered_services_list)
         tasks = json.loads(response.content).get('Tasks')
         for task in tasks:
             sys.stdout.write(f"\rВсего / Обработано..........................................{total} / {count}")
-            time.sleep(0.25)
+            time.sleep(0.4)
             editors = get_editors(ses, url, task['Id'])
             for executor in executors:
                 for editor in editors:
@@ -156,8 +156,10 @@ def get_tasks_field(ses, url):
 
 
 def config_excel_file(start, end):
-    path = f'C:\\Users\\Alex\\Downloads\\Статистика_{start}-{end}.xlsx'
-    # path = f'C:\\Users\\mfedorov\\Desktop\\Статистика_{start}-{end}.xlsx'
+    #path = f'C:\\Users\\Alex\\Downloads\\Статистика_{start}-{end}.xlsx'
+    path = f'C:\\Users\\mfedorov\\Desktop\\Статистика_{start}-{end}.xlsx'
+    path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Общая статистика_{start}-{end}.xlsx'
+
 
     try:
         if os.path.exists(path):
@@ -190,8 +192,9 @@ def create_result_file(first, second, arr):
     row = 2
     column = 1
     total = 0
-    path = f'C:\\Users\\Alex\\Downloads\\Результат_{first}-{second}.xlsx'
-    # path = f'C:\\Users\\mfedorov\\Desktop\\Итог_{first}-{second}.xlsx'
+    #path = f'C:\\Users\\Alex\\Downloads\\Результат_{first}-{second}.xlsx'
+    #path = f'C:\\Users\\mfedorov\\Desktop\\Итог_{first}-{second}.xlsx'
+    path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Итог_{first}-{second}.xlsx'
 
     try:
         if os.path.exists(path):
@@ -208,18 +211,7 @@ def create_result_file(first, second, arr):
     ws.cell(row=1, column=2, value='Категория')
     ws.cell(row=1, column=3, value='Количество')
 
-    # for field in arr:
-    #     total += field[3]
-    #     for item in range(1, len(field)):
-    #         ws.cell(row=row, column=column, value=field[item])
-    #         column += 1
-    #     column = 1
-    #     row += 1
-    # ws.cell(row=row, column=2, value="Всего")
-    # ws.cell(row=row, column=3, value=total)
-    # wb.save(filename=path)
-
-    # for all id
+    # for all ids
     for field in arr:
         total += field[2]
         for item in field:
@@ -230,36 +222,6 @@ def create_result_file(first, second, arr):
     ws.cell(row=row, column=2, value="Всего")
     ws.cell(row=row, column=3, value=total)
     wb.save(filename=path)
-
-
-# def reporting(id, service, category, report):
-#     if len(report) == 0:
-#         report.append([id, service, category, 1])
-#         return
-#     for element in range(0, len(report)):
-#         if report[element][0] != id:
-#             if report[element][1] == service and report[element][2] == category:
-#                 report[element][3] += 1
-#                 return
-#             else:
-#                 if element + 1 == len(report):
-#                     report.append([id, service, category, 1])
-#         else:
-#             return
-
-
-# def get_task(ses, url, arr):
-#     result = []
-#     cred = '366.dutyadmin@fil-it.ru'
-#     for Id in arr:
-#         print(Id)
-#         response = ses.get(url + f'task?Id={Id}',
-#                            auth=HTTPBasicAuth(cred, cred))
-#         task = json.loads(response.content).get('Task')
-#         #   print(json.dumps(task, indent=4, sort_keys=False, ensure_ascii=False))
-#
-#         reporting(get_element_name(task['ServiceId'], services), task['Categories'], result)
-#     return result
 
 
 def reporting(service, category, arr):
@@ -286,7 +248,12 @@ def write_field(row, fields, ws, wb, path):
 
 
 if __name__ == '__main__':
+   # cred = '366.dutyadmin@fil-it.ru'
     api_url = 'https://api-sd.366.ru/api/'
     session = requests.Session()
+    # response = session.get(api_url + f'tasklifetime?taskid={1729443}',
+    #                                  auth=HTTPBasicAuth(cred, cred))
+    # life_time = json.loads(response.content).get('TaskLifetimes')
+    # print(json.dumps(life_time, indent=4, sort_keys=False, ensure_ascii=False))
     start, end, arr = get_tasks_field(session, api_url)
     create_result_file(start, end, arr)
