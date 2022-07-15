@@ -156,9 +156,9 @@ def get_tasks_field(ses, url):
 
 
 def config_excel_file(start, end):
-    #path = f'C:\\Users\\Alex\\Downloads\\Статистика_{start}-{end}.xlsx'
-    path = f'C:\\Users\\mfedorov\\Desktop\\Статистика_{start}-{end}.xlsx'
-    path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Общая статистика_{start}-{end}.xlsx'
+    path = f'C:\\Users\\Alex\\Downloads\\Статистика_{start}-{end}.xlsx'
+    #path = f'C:\\Users\\mfedorov\\Desktop\\Статистика_{start}-{end}.xlsx'
+    #path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Общая статистика_{start}-{end}.xlsx'
 
 
     try:
@@ -192,9 +192,9 @@ def create_result_file(first, second, arr):
     row = 2
     column = 1
     total = 0
-    #path = f'C:\\Users\\Alex\\Downloads\\Результат_{first}-{second}.xlsx'
+    path = f'C:\\Users\\Alex\\Downloads\\Результат_{first}-{second}.xlsx'
     #path = f'C:\\Users\\mfedorov\\Desktop\\Итог_{first}-{second}.xlsx'
-    path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Итог_{first}-{second}.xlsx'
+    #path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Итог_{first}-{second}.xlsx'
 
     try:
         if os.path.exists(path):
