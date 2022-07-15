@@ -80,7 +80,7 @@ def get_element_name(id, element_list):
 
 
 def get_tasks_field(ses, url):
-    cred = '366.dutyadmin@fil-it.ru'
+    cred = 'cred'
     arr = []
     isExecutor = False
     fields = []
@@ -236,8 +236,7 @@ def write_field(row, fields, ws, wb, path):
 
 
 if __name__ == '__main__':
-    # cred = '366.dutyadmin@fil-it.ru'
-    api_url = 'https://api-sd.366.ru/api/'
+    api_url = 'api_url'
     session = requests.Session()
     # response = session.get(api_url + f'tasklifetime?taskid={1729443}',
     #                                  auth=HTTPBasicAuth(cred, cred))
