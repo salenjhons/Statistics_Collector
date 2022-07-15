@@ -64,8 +64,6 @@ services = [{'Id': 1206, 'Name': 'Техническая поддержка АП
 #     return json.loads(response.content).get('Services')
 
 
-# print(json.dumps(data, indent=4, sort_keys=False, ensure_ascii=False))
-
 def get_editors(ses, url, task_id):
     editors = []
     response = ses.get(url + f'tasklifetime?taskid={task_id}')
@@ -93,23 +91,14 @@ def get_tasks_field(ses, url):
     start_date = input('Начало периода: ')
     end_date = input('Конец периода: ')
     print("Загрузка данных...")
-    # services = get_services_list(ses, url)
     service_list_full = '1206,475,134,192,191,194,395,195,1155,844,845,846,847,881,193,329,190,189,848,230,882,' \
                         '1179,1198,136,327,311,661,316,320,319,1153,313,312,163,672,324,168,314,315,321,322,318,' \
                         '317,178,328,325,1151,1152,326,242,412,500,899,436,25,132,250,254,252,255,1134,127,215,' \
                         '211,212,214,345,406,368,398,414,374,903,156,1124,472,237,323,21,27,330,346,349,507,1097,' \
                         '508,509,1181,1182,1201'
-    services_list = '1206,395,195,1155,844,845,846,847,881,193,329,846,847,881,193,329,190,899,436,25,132,250,254,' \
-                    '252,255,1134,127,215,211,212,214,345,406,368,398,414,374,156,1124,472,237,323,21,27,330,346,' \
-                    '349,507,1097,508,509,1181,1182,1201'
+
     filtered_services_list = '1206,395,195,1155,844,845,846,881,193,329,899,436,25,132,250,254,252,255,1134,345,156,' \
                              '1124,323,21,27,330,346,349,507,1097,508,509,1181,1182,1201,190,1208,189'
-
-    services_list_full2 = '1206,475,134,192,191,194,395,195,1155,844,845,846,847,881,193,329,1208,190,189,848,230,882,' \
-                          '1179,1198,136,327,311,661,316,320,319,1153,313,312,163,672,324,168,314,315,321,322,318,317,' \
-                          '178,328,325,1151,1152,326,242,412,500,25,436,899,1209,132,255,254,252,1134,250,127,215,211,' \
-                          '212,214,1207,156,1124,1210,472,237,345,406,368,398,414,374,903,330,346,349,507,1097,508,509,' \
-                          '1181,1182,1201,323,21,27'
     row = 2
     ws, wb, path = config_excel_file(start_date, end_date)
 
@@ -157,9 +146,8 @@ def get_tasks_field(ses, url):
 
 def config_excel_file(start, end):
     path = f'C:\\Users\\Alex\\Downloads\\Статистика_{start}-{end}.xlsx'
-    #path = f'C:\\Users\\mfedorov\\Desktop\\Статистика_{start}-{end}.xlsx'
-    #path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Общая статистика_{start}-{end}.xlsx'
-
+    # path = f'C:\\Users\\mfedorov\\Desktop\\Статистика_{start}-{end}.xlsx'
+    # path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Общая статистика_{start}-{end}.xlsx'
 
     try:
         if os.path.exists(path):
@@ -193,8 +181,8 @@ def create_result_file(first, second, arr):
     column = 1
     total = 0
     path = f'C:\\Users\\Alex\\Downloads\\Результат_{first}-{second}.xlsx'
-    #path = f'C:\\Users\\mfedorov\\Desktop\\Итог_{first}-{second}.xlsx'
-    #path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Итог_{first}-{second}.xlsx'
+    # path = f'C:\\Users\\mfedorov\\Desktop\\Итог_{first}-{second}.xlsx'
+    # path = f'C:\\Users\\kgorshkov\\Desktop\\Статистика\\Итог_{first}-{second}.xlsx'
 
     try:
         if os.path.exists(path):
@@ -248,7 +236,7 @@ def write_field(row, fields, ws, wb, path):
 
 
 if __name__ == '__main__':
-   # cred = '366.dutyadmin@fil-it.ru'
+    # cred = '366.dutyadmin@fil-it.ru'
     api_url = 'https://api-sd.366.ru/api/'
     session = requests.Session()
     # response = session.get(api_url + f'tasklifetime?taskid={1729443}',
